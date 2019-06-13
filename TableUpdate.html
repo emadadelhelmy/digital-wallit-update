@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Page</title>
+    <script>
+
+        function CheckUserName() {
+            var txtuser = document.getElementById('txtuser');
+           var letters = txtuser.value.match('^[A-Za-z]+$');
+            if (txtuser.value == 0 || txtuser.value == null ) {
+                document.getElementById('erroruser').innerText = 'Username must have alphabet characters only !';
+                txtuser.focus();
+                return false;
+            } if(txtuser<2 || txtuser>15){
+                document.getElementById('erroruser').innerText = 'name cannot be less than 2 or more than 15 letters !';
+                return false;
+
+            }if  (txtuser.value.match('^[A-Za-z]+$')){
+                return true;
+            }
+            else
+                {
+                document.getElementById('erroruser').innerText = '';
+                return true;
+            }
+        }
+
+        function checkemail(input) {
+
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById('emailtxt').value)){
+                document.getElementById('emailerror').innerHTML='';
+                return true;
+            }
+            else {
+                document.getElementById('emailerror').innerHTML='You have entered an invalid email address!';
+                    return false;
+            }
+
+
+
+        }
+        function checkphone() {
+            var num=document.getElementById('Phonenum').value;
+            if(isNaN(num)){
+                document.getElementById("telerror").innerHTML="Enter Numeric value only";
+                return false;
+            }
+            else{
+                document.getElementById("telerror").innerHTML="";
+                return true;
+            }
+
+        }
+        function checkaddress() {
+            if(isNaN(document.getElementById('buildnum')).value){
+                document.getElementById('AddressError').innerText='the build field must be number .. '
+                return false;
+            }
+            var street=document.getElementById('streettxt').value;
+            if(street<1){
+                document.getElementById('AddressError').innerText='the street field must be complete .. '
+                return false;
+            }
+            var town=document.getElementById('towntxt').value;
+            if(town<1){
+                document.getElementById('AddressError').innerText='the town field must be complete .. '
+                return false;
+            }else {
+                document.getElementById('AddressError').innerText=''
+                return true;
+            }
+
+        }
+
+        function validAuthentication(PAS,fingerprint,eyedetection)
+        {
+            x=0;
+
+            if(PAS.checked)
+            {
+                x++;
+            } if(fingerprint.checked)
+        {
+            x++;
+        }
+            if(eyedetection.checked)
+            {
+                x++;
+            }
+            if(x==0)
+            {
+                document.getElementById('AuthenticationError').innerText='you must have checked';
+                PAS.focus();
+                return false;
+            }
+            else
+            {
+                alert('Form Successfully Submitted');
+                window.location.reload()
+                return true;}
+        }
+            function CheckPassword()
+            {
+                 if(paswd= /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/.test(document.getElementById('passwordtxt')).value){
+                     document.getElementById('PassError').innerHTML='';
+                        return true;
+                 }else{
+                     document.getElementById('PassError').innerHTML='the Password should include both characters and numbers or symbols';
+                     alert('Wrong...!')
+
+                     return false;
+                 }
+
+
+         //   var textpassword = document.getElementById('passwordtxt').value;
+         //   var paswd= (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/);
+         //   if(inputtxt.value.match(paswd)) {
+           //     return true;
+            //}
+            //else{
+              //  document.getElementById('PassError').innerText='Wrong...!';
+               // textpassword.focus();
+               // return false;
+         //   }
+
+
+
+                }
+
+
+
+    </script>
+
+</head>
+<body style="background-color: blueviolet">
+<h1 align="center" >Update Information</h1> <br>
+<form autocomplete="on" method="POST" action="update" style="border-width: 1070px" >
+<table align="center" style="background-color: aqua ; border-radius: 10px; font-size:larger; border-width: 1050px; padding: 15px;width:70%;   border: 1px solid black;
+  ">
+    <tr>
+        <td>
+            <label > User Name : </label>
+        </td>
+        <td>
+            <input type="text" id='txtuser'   minlength="2" maxlength="15"  placeholder="User Name" name="UserNameTxt"   onblur="CheckUserName();">
+        </td>
+        <td>
+            <span id="erroruser"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label> Email : </label>
+        </td>
+        <td>
+            <input type="email" placeholder="Email" id="emailtxt"  name="EmailTxt"  onblur="checkemail(document.getElementById('emailtxt'));" required="required">
+        </td>
+        <td>
+            <spam id="emailerror"></spam>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label> Phone :</label>
+        </td>
+        <td>
+            <input type="tel" placeholder="Phone number" name="PhoneTxt" id="Phonenum" minlength="0" maxlength="11" onblur="checkphone()">
+        </td>
+        <td>
+            <spam id="telerror"></spam>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label> Address :</label>
+        </td>
+        <td>
+            <input type="text" placeholder="building number " id="buildnum" onblur="checkaddress('buildnum')">
+            <input type="text" placeholder="street" id="streettxt" onblur="checkaddress('streettxt')">
+            <input type="text" placeholder="town " id="towntxt"onblur="checkaddress('towntxt')">
+            <span id="AddressError"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Authentication :</label>
+        </td>
+        <td>
+            <input type="radio" name="Authentication" id="PAS"  oninvalid="validAuthentication();">
+            <label> Password </label>
+            <input type="radio" name="Authentication" id="fingerprint" oninvalid="validAuthentication();" >
+            <label> finger print </label>
+            <input type="radio" name="Authentication" id="eyedetection"oninvalid="validAuthentication();" >
+            <label> eye-detection </label>
+        </td>
+        <td>
+            <span id="AuthenticationError"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Password :</label>
+        </td>
+        <td>
+            <input type="password" placeholder="Password" name="PasTxt" id="passwordtxt" onblur="CheckPassword();" required>
+        </td>
+        <td>
+            <span id="PassError"> </span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="Update" name="BtnUpdate"
+                   onclick="return CheckPassword(document.getElementById('passwordtxt'));" >
+        </td>
+        <td>
+            <input type="reset">
+        </td>
+
+    </tr>
+</table>
+</form>
+
+</body>
+</html>
